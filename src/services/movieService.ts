@@ -8,13 +8,14 @@ interface FetchMoviesResponse {
 }
 
 export const fetchMovies = async (query: string): Promise<Movie[]> => {
-  const token = import.meta.env.VITE_TMDB_TOKEN;
+  const apiKey = import.meta.env.VITE_TMDB_API_KEY; // Використовуємо нову назву
 
   const response = await axios.get<FetchMoviesResponse>(API_URL, {
-    params: { query },
-    headers: {
-      Authorization: `Bearer ${token}`,
+    params: {
+      query,
+      api_key: apiKey, // Параметр має назву "api_key"
     },
+    // УБЕРИТЬ headers з Authorization!
   });
 
   return response.data.results;
